@@ -1,0 +1,35 @@
+package com.epf.rentmanager.models;
+
+import java.time.LocalDate;
+
+public class Reservation {
+
+    private long id;
+    private long client_id;
+    private long vehicle_id;
+
+    private LocalDate debut;
+    private LocalDate fin;
+
+    public Reservation() {
+    }
+
+    public Reservation(long id, long client_id, long vehicle_id, LocalDate debut, LocalDate fin) {
+        this.id = id;
+        this.client_id = client_id;
+        this.vehicle_id = vehicle_id;
+        this.debut = debut;
+        this.fin = fin;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", client_id=" + client_id +
+                ", vehicle_id=" + vehicle_id +
+                ", debut=" + debut +
+                ", fin=" + fin +
+                '}';
+    }
+}

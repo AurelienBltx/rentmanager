@@ -75,7 +75,7 @@
                                         <tr>
                                             <th style="width: 10px">#</th>
                                             <th>Modele</th>
-                                            <th>Constructeur</th>
+                                            <th>constructor</th>
                                             <th style=>Nombre de places</th>
                                         </tr>
                                         <tr>

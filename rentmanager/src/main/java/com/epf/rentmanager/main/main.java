@@ -1,5 +1,7 @@
 package com.epf.rentmanager.main;
 
+import com.epf.rentmanager.dao.ClientDao;
+import com.epf.rentmanager.dao.VehicleDao;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.models.Client;
 import com.epf.rentmanager.models.Vehicle;
@@ -16,9 +18,9 @@ public class main {
     public static void main(String args[]) throws ServiceException {
 
         //Trouver client par ID
-        Client client = new Client();
+        ClientDao client = new ClientDao();
         System.out.println(client.toString());
-        ClientService clients = ClientService.getInstance();
+        ClientService clients = new ClientService(client);
         clients.findAll();
         System.out.println(clients);
         System.out.println("Quel client ?");
@@ -28,9 +30,9 @@ public class main {
         System.out.println(clientele);
 
         //Trouver vehicule par ID
-        Vehicle vehicle = new Vehicle();
+        VehicleDao vehicle = new VehicleDao();
         System.out.println(vehicle.toString());
-        VehicleService vehicles = VehicleService.getInstance();
+        VehicleService vehicles = new VehicleService(vehicle);
         vehicles.findAll();
         System.out.println(vehicles);
         System.out.println("Quel véhicule ?");
@@ -50,10 +52,10 @@ public class main {
         System.out.println("Nombre de véhicules : " + nbVehicle);
 
         //Nombre de reservations
-        int nbReservation = 0;
-        ReservationService reservations = ReservationService.getInstance();
+        /*int nbReservation = 0;
+        ReservationService reservations = new ReservationService(nbReservation);
         nbReservation = reservations.count();
-        System.out.println("Nombre de réservations : " + nbReservation);
+        System.out.println("Nombre de réservations : " + nbReservation);*/
 
     }
 }

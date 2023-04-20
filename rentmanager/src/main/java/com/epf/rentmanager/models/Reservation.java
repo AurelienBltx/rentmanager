@@ -32,4 +32,24 @@ public class Reservation {
                 ", fin=" + fin +
                 '}';
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public long getClient_id() {
+        return client_id;
+    }
+
+    public long getVehicle_id() {
+        return vehicle_id;
+    }
+
+    public LocalDate getDebut() {
+        return debut;
+    }
+
+    public LocalDate getFin() {
+        return fin;
+    }
 }

@@ -15,17 +15,27 @@ import org.springframework.stereotype.Service;
 public class VehicleService {
 
 	private VehicleDao vehicleDao;
-	public static VehicleService instance;
 	
 	public VehicleService(VehicleDao VehicleDao) {
 		this.vehicleDao = VehicleDao;
 	}
 	
 	
-	public long create(Vehicle vehicle) throws ServiceException {
-		// TODO: créer un véhicule
+	public void create(Vehicle vehicle) throws ServiceException {
+		try {
+			vehicleDao.create(vehicle);
+		} catch (DaoException e) {
+			throw new ServiceException();
+		}
+	}
 
-		return 0;
+	public void delete(long id) throws ServiceException {
+		// TODO: supprimer un client
+		try {
+			vehicleDao.delete(id);
+		} catch (DaoException e) {
+			throw new ServiceException();
+		}
 	}
 
 	public Vehicle findById(long id) throws ServiceException {

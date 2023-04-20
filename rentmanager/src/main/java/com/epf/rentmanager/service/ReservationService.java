@@ -4,6 +4,7 @@ import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 
+import com.epf.rentmanager.models.Client;
 import com.epf.rentmanager.models.Reservation;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +21,22 @@ public class ReservationService {
 
 
 
-    public long create(Reservation reservation) throws ServiceException {
-        // TODO: créer une Reservation
-        return 0;
+    public void create(Reservation reservation) throws ServiceException {
+        // TODO: créer un client
+        try {
+            reservationDao.create(reservation);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
+    public void delete(long id) throws ServiceException {
+        // TODO: supprimer un client
+        try {
+            reservationDao.delete(id);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
     }
 
     public List<Reservation> findResaByClientId(long id) throws ServiceException {

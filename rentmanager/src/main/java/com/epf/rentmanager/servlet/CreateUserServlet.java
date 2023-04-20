@@ -39,9 +39,11 @@ public class CreateUserServlet extends HttpServlet {
         String prenom = req.getParameter("last_name");
         String email = req.getParameter("email");
         LocalDate naissance = LocalDate.parse(req.getParameter("naissance"));
+
         try {
             clientService.create(new Client(nom, 1, naissance, prenom, email));
             req.setAttribute("clients", clientService.findAll());
+            
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }

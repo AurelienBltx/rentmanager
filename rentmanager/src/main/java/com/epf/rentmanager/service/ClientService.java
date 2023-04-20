@@ -29,6 +29,15 @@ public class ClientService {
 		}
 	}
 
+	public void delete(long id) throws ServiceException {
+		// TODO: supprimer un client
+		try {
+			clientDao.delete(id);
+		} catch (DaoException e) {
+			throw new ServiceException();
+		}
+	}
+
 	public Client findById(long id) throws ServiceException {
 		// TODO: récupérer un client par son id
 		try {

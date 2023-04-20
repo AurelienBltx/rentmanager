@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.epf.rentmanager.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowire;
 
 
@@ -31,30 +32,62 @@ public class ReservationDao {
 	private static final String FIND_RESERVATIONS_BY_CLIENT_QUERY = "SELECT id, vehicle_id, debut, fin FROM Reservation WHERE client_id=?;";
 	private static final String FIND_RESERVATIONS_BY_VEHICLE_QUERY = "SELECT id, client_id, debut, fin FROM Reservation WHERE vehicle_id=?;";
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
-		
-	public long create(Reservation reservation) throws DaoException {
-		return 0;
+
+	public void create(Reservation reservation) throws DaoException {
+		try
+		{
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(CREATE_RESERVATION_QUERY);
+
+
+			stmt.setLong(1, reservation.getClient_id());
+			stmt.setLong(2, reservation.getVehicle_id());
+			stmt.setDate(3, java.sql.Date.valueOf(reservation.getDebut()));
+			stmt.setDate(4, java.sql.Date.valueOf(reservation.getFin()));
+
+			stmt.executeUpdate();
+
+			connection.close();
+			stmt.close();
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException();
+		}
 	}
-	
-	public long delete(Reservation reservation) throws DaoException {
-		return 0;
+
+	public void delete(long id) throws DaoException {
+		try
+		{
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(DELETE_RESERVATION_QUERY);
+			stmt.setLong(1, id);
+			stmt.executeUpdate();
+
+			connection.close();
+			stmt.close();
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException();
+		}
 	}
 
 	
-	public List<Reservation> findResaByClientId(long clientId) throws DaoException {
+	public List<Reservation> findResaByClientId(long client_id) throws DaoException {
 		List<Reservation> resa = new ArrayList<Reservation>();
 		try
 		{
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(FIND_RESERVATIONS_BY_CLIENT_QUERY);
-			stmt.setLong(1, clientId);
+			stmt.setLong(1, client_id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				long id = rs.getLong("id");
 				long vehicle_id = rs.getLong("vehicle_id");
 				LocalDate debut = rs.getDate("debut").toLocalDate();
 				LocalDate fin = rs.getDate("fin").toLocalDate();
-				resa.add(new Reservation(id, clientId, vehicle_id, debut, fin));
+				resa.add(new Reservation(id, client_id, vehicle_id, debut, fin));
 			}
 
 			connection.close();
@@ -69,20 +102,20 @@ public class ReservationDao {
 		return resa;
 	}
 	
-	public List<Reservation> findResaByVehicleId(long vehicleId) throws DaoException {
+	public List<Reservation> findResaByVehicleId(long vehicle_id) throws DaoException {
 		List<Reservation> resa = new ArrayList<Reservation>();
 		try
 		{
 			Connection connection = ConnectionManager.getConnection();
-			PreparedStatement stmt = connection.prepareStatement(FIND_RESERVATIONS_BY_CLIENT_QUERY);
-			stmt.setLong(1, vehicleId);
+			PreparedStatement stmt = connection.prepareStatement(FIND_RESERVATIONS_BY_VEHICLE_QUERY);
+			stmt.setLong(1, vehicle_id);
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()){
 				long id = rs.getLong("id");
 				long client_id = rs.getLong("client_id");
 				LocalDate debut = rs.getDate("debut").toLocalDate();
 				LocalDate fin = rs.getDate("fin").toLocalDate();
-				resa.add(new Reservation(id, client_id, vehicleId, debut, fin));
+				resa.add(new Reservation(id, client_id, vehicle_id, debut, fin));
 			}
 
 			connection.close();
@@ -112,7 +145,6 @@ public class ReservationDao {
 				long vehicle_id = rs.getLong("vehicle_id");
 				LocalDate debut = rs.getDate("debut").toLocalDate();
 				LocalDate fin = rs.getDate("fin").toLocalDate();
-				LocalDate date = rs.getDate("naissance").toLocalDate();
 
 				reservations.add(new Reservation(id, client_id, vehicle_id, debut, fin));
 			}

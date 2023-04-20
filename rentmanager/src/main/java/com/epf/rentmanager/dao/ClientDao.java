@@ -21,13 +21,11 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ClientDao {
-	
-	private static ClientDao instance = null;
 	public ClientDao() {}
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
-	private static final String FIND_CLIENT_QUERY = "SELECT nom, prenom, email, naissance FROM Client WHERE id=?;";
-	private static final String FIND_CLIENTS_QUERY = "SELECT id, nom, prenom, email, naissance FROM Client;";
+	private static final String FIND_CLIENT_QUERY = "SELECT * FROM Client WHERE id=?;";
+	private static final String FIND_CLIENTS_QUERY = "SELECT * FROM Client;";
 	
 	public void create(Client client) throws DaoException {
 		try
@@ -51,8 +49,21 @@ public class ClientDao {
 		}
 	}
 	
-	public long delete(Client client) throws DaoException {
-		return 0;
+	public void delete(long id) throws DaoException {
+		try
+		{
+			Connection connection = ConnectionManager.getConnection();
+			PreparedStatement stmt = connection.prepareStatement(DELETE_CLIENT_QUERY);
+			stmt.setLong(1, id);
+			stmt.executeUpdate();
+
+			connection.close();
+			stmt.close();
+		}
+		catch(SQLException e)
+		{
+			throw new RuntimeException();
+		}
 	}
 
 	public Client findById(long id) throws DaoException {

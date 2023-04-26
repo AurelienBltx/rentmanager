@@ -49,14 +49,10 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="owner" class="col-sm-2 control-label">Proprietaire</label>
+                                    <label for="seats" class="col-sm-2 control-label">Modele</label>
 
                                     <div class="col-sm-10">
-                                        <select class="form-control"  id="owner_id" name="owner_id">
-                                            <c:forEach items="${clients}" var="client">
-                                                <option value="${client.id}">${client.name} ${client.lastName}</option>
-                                            </c:forEach>
-                                        </select>
+                                        <input type="text" class="form-control" id="model" name="model" value="${vehicle.model}" required>
                                     </div>
                                 </div>
                             </div>

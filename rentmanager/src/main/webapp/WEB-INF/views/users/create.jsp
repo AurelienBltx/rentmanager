@@ -58,7 +58,7 @@
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
-                                <button type="submit" class="btn btn-info pull-right">Ajouter</button>
+                                <button type="submit" class="btn btn-info pull-right">Sauvegarder</button>
                             </div>
                             <!-- /.box-footer -->
                         </form>

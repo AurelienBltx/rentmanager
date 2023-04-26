@@ -6,9 +6,12 @@ import com.epf.rentmanager.exception.ServiceException;
 
 import com.epf.rentmanager.models.Client;
 import com.epf.rentmanager.models.Reservation;
+import com.epf.rentmanager.models.Vehicle;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ReservationService {
@@ -39,6 +42,24 @@ public class ReservationService {
         }
     }
 
+    public void edit(long id, long vehicle_id, long client_id, LocalDate debut, LocalDate fin) throws ServiceException {
+        // TODO: modifier une reservation
+        try {
+            reservationDao.edit(id, vehicle_id, client_id, debut, fin);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
+    public Reservation findById(long id) throws ServiceException {
+        // TODO: récupérer une reservation par son id
+        try {
+            return reservationDao.findById(id);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
     public List<Reservation> findResaByClientId(long id) throws ServiceException {
         // TODO: récupérer une Reservation par son id
         try {
@@ -57,6 +78,24 @@ public class ReservationService {
         }
     }
 
+    public Client findClientResaById(long id) throws ServiceException {
+        // TODO: récupérer les infos d'une Reservation par son id
+        try {
+            return reservationDao.findClientResaById(id);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
+    public Vehicle findVehicleResaById(long id) throws ServiceException {
+        // TODO: récupérer les infos d'une Reservation par son id
+        try {
+            return reservationDao.findVehicleResaById(id);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
     public List<Reservation> findAll() throws ServiceException {
         // TODO: récupérer toutes les Reservations
         try {
@@ -66,10 +105,28 @@ public class ReservationService {
         }
     }
 
-    public int count() throws ServiceException {
+    public int countAll() throws ServiceException {
         // TODO: récupérer tous les clients
         try {
-            return reservationDao.count();
+            return reservationDao.countAll();
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
+    public int countResaByClient(long id) throws ServiceException {
+        // TODO: récupérer tous les clients
+        try {
+            return reservationDao.countResaByClient(id);
+        } catch (DaoException e) {
+            throw new ServiceException();
+        }
+    }
+
+    public int countResaByVehicle(long id) throws ServiceException {
+        // TODO: récupérer tous les clients
+        try {
+            return reservationDao.countResaByVehicle(id);
         } catch (DaoException e) {
             throw new ServiceException();
         }

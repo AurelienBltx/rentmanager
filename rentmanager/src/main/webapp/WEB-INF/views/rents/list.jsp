@@ -37,15 +37,15 @@
                                 <c:forEach items="${reservations}" var="reservation">
                                     <tr>
                                         <td>${reservation.id}</td>
-                                        <td>${reservation.vehicle_id}</td>
-                                        <td>${reservation.client_id}</td>
+                                        <td>${cars.get(reservation.id).constructor} ${cars.get(reservation.id).model}</td>
+                                        <td>${users.get(reservation.id).prenom} ${users.get(reservation.id).nom}</td>
                                         <td>${reservation.debut}</td>
                                         <td>${reservation.fin}</td>
                                         <td>
                                             <a class="btn btn-primary" href="${pageContext.request.contextPath}/rents?id=1">
                                                 <i class="fa fa-play"></i>
                                             </a>
-                                            <a class="btn btn-success disabled" href="#">
+                                            <a class="btn btn-success" href="${pageContext.request.contextPath}/rents/edit?id=${reservation.id}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a class="btn btn-danger" href="${pageContext.request.contextPath}/rents/delete?id=${reservation.id}">

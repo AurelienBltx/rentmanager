@@ -42,9 +42,10 @@ public class HomeServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		try{
-			request.setAttribute("nbClients", clientService.count());
-			request.setAttribute("nbVehicles", vehicleService.count());
-			request.setAttribute("nbReservations", reservationService.count());
+			request.setAttribute("nbClients", clientService.countAll());
+			request.setAttribute("nbVehicles", vehicleService.countAll());
+			request.setAttribute("nbReservations", reservationService.countAll());
+			System.out.println(reservationService.countAll());
 
 		} catch (ServiceException e){
 			e.printStackTrace();

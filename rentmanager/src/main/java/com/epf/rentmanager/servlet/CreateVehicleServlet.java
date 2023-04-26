@@ -46,11 +46,11 @@ public class CreateVehicleServlet extends HttpServlet {
 
         String constructor = req.getParameter("manufacturer");
         int seats = Integer.parseInt(req.getParameter("seats"));
-        int owner_id = Integer.parseInt(req.getParameter("owner_id"));
+        String model = req.getParameter("model");
 
 
         try {
-            vehicleService.create(new Vehicle(1, constructor, seats, owner_id));
+            vehicleService.create(new Vehicle(1, constructor, seats, model));
             req.setAttribute("vehicles", vehicleService.findAll());
 
         } catch (ServiceException e) {

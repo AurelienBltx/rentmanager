@@ -5,17 +5,17 @@ import java.time.LocalDate;
 
 public class Client {
 
-    private String name;
+    private String prenom;
     private long id;
-    private LocalDate date;
-    private String lastName;
+    private LocalDate naissance;
+    private String nom;
     private String email;
 
-    public Client(String name, long id, LocalDate date, String lastName, String email) {
-        this.name = name;
+    public Client(long id, String prenom, String nom, LocalDate naissance, String email) {
         this.id = id;
-        this.date = date;
-        this.lastName = lastName;
+        this.prenom = prenom;
+        this.naissance = naissance;
+        this.nom = nom;
         this.email = email;
     }
 
@@ -25,28 +25,28 @@ public class Client {
     @Override
     public String toString() {
         return "Client{" +
-                "name='" + name + '\'' +
+                "prenom='" + prenom + '\'' +
                 ", id=" + id +
-                ", date=" + date +
-                ", lastName='" + lastName + '\'' +
+                ", naissance=" + naissance +
+                ", nom='" + nom + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
 
-    public String getName() {
-        return name;
+    public String getPrenom() {
+        return prenom;
     }
 
     public long getId() {
         return id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDate getNaissance() {
+        return naissance;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getNom() {
+        return nom;
     }
 
     public String getEmail() {

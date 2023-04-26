@@ -4,16 +4,16 @@ public class Vehicle {
     private long id;
     private String constructor;
     private int seats;
-    private int owner_id;
+    private String model;
 
     public Vehicle() {
     }
 
-    public Vehicle(long id, String constructor, int seats, int owner_id) {
+    public Vehicle(long id, String constructor, int seats, String model) {
         this.id = id;
         this.constructor = constructor;
         this.seats = seats;
-        this.owner_id = owner_id;
+        this.model = model;
     }
 
     public long getId() {
@@ -28,24 +28,8 @@ public class Vehicle {
         return seats;
     }
 
-    public int getOwner_id() {
-        return owner_id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setConstructor(String constructor) {
-        this.constructor = constructor;
-    }
-
-    public void setSeats(int seats) {
-        this.seats = seats;
-    }
-
-    public void setOwner_id(int owner_id) {
-        this.owner_id = owner_id;
+    public String getModel() {
+        return model;
     }
 
     @Override
@@ -54,8 +38,7 @@ public class Vehicle {
                 "id=" + id +
                 ", constructor='" + constructor + '\'' +
                 ", seats=" + seats +
+                ", model='" + model + '\'' +
                 '}';
     }
-
-
 }

@@ -30,7 +30,7 @@
                                     <th style="width: 10px">#</th>
                                     <th>Marque</th>
                                     <th>Nombre de places</th>
-                                    <th>Proprietaire</th>
+                                    <th>Modele</th>
                                     <th>Action</th>
                                 </tr>
 
@@ -40,12 +40,12 @@
                                         <td>${vehicle.id}</td>
                                         <td>${vehicle.constructor}</td>
                                         <td>${vehicle.seats}</td>
-                                        <td>${vehicle.owner_id}</td>
+                                        <td>${vehicle.model}</td>
                                         <td>
-                                            <a class="btn btn-primary disabled" href="car-detail.html">
+                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/vehicles/details?id=${vehicle.id}">
                                                 <i class="fa fa-play"></i>
                                             </a>
-                                            <a class="btn btn-success disabled" href="#">
+                                            <a class="btn btn-success" href="${pageContext.request.contextPath}/vehicles/edit?id=${vehicle.id}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a class="btn btn-danger" href="${pageContext.request.contextPath}/vehicles/delete?id=${vehicle.id}">

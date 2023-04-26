@@ -36,14 +36,14 @@
                                 <c:forEach items="${clients}" var="client">
                                     <tr>
                                         <td>${client.id}</td>
-                                        <td>${client.lastName}</td>
-                                        <td>${client.name}</td>
+                                        <td>${client.nom}</td>
+                                        <td>${client.prenom}</td>
                                         <td>${client.email}</td>
                                         <td>
-                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=1">
+                                            <a class="btn btn-primary" href="${pageContext.request.contextPath}/users/details?id=${client.id}">
                                             <i class="fa fa-play"></i>
                                             </a>
-                                            <a class="btn btn-success disabled" href="#">
+                                            <a class="btn btn-success" href="${pageContext.request.contextPath}/users/edit?id=${client.id}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
                                             <a class="btn btn-danger" href="${pageContext.request.contextPath}/users/delete?id=${client.id}">

@@ -29,7 +29,7 @@ public class FillDatabase {
 
         List<String> createTablesQueries = new ArrayList<>();
         createTablesQueries.add("CREATE TABLE IF NOT EXISTS Client(id INT primary key auto_increment, nom VARCHAR(100), prenom VARCHAR(100), email VARCHAR(100), naissance DATETIME)");
-        createTablesQueries.add("CREATE TABLE IF NOT EXISTS Vehicle(id INT primary key auto_increment, constructor VARCHAR(100), seats TINYINT(255), owner_id TINYINT(255), foreign key(owner_id) REFERENCES Client(id))");
+        createTablesQueries.add("CREATE TABLE IF NOT EXISTS Vehicle(id INT primary key auto_increment, constructor VARCHAR(100), seats TINYINT(255), model VARCHAR(100))");
         createTablesQueries.add("CREATE TABLE IF NOT EXISTS Reservation(id INT primary key auto_increment, client_id INT, foreign key(client_id) REFERENCES Client(id), vehicle_id INT, foreign key(vehicle_id) REFERENCES Vehicle(id), debut DATETIME, fin DATETIME)");
 
         try {
@@ -48,10 +48,10 @@ public class FillDatabase {
             stmt.execute("INSERT INTO Client(nom, prenom, email, naissance) VALUES('Afleck', 'Steeve', 'steeve.afleck@email.com', '1988-01-22')");
             stmt.execute("INSERT INTO Client(nom, prenom, email, naissance) VALUES('Rousseau', 'Jacques', 'jacques.rousseau@email.com', '1988-01-22')");
 
-            stmt.execute("INSERT INTO Vehicle(constructor, seats, owner_id) VALUES('Renault', 4, 1)");
-            stmt.execute("INSERT INTO Vehicle(constructor, seats, owner_id) VALUES('Peugeot', 4, 2)");
-            stmt.execute("INSERT INTO Vehicle(constructor, seats, owner_id) VALUES('Seat', 4, 3)");
-            stmt.execute("INSERT INTO Vehicle(constructor, seats, owner_id) VALUES('Nissan', 4, 4)");
+            stmt.execute("INSERT INTO Vehicle(constructor, seats, model) VALUES('Renault', 4, 'Clio')");
+            stmt.execute("INSERT INTO Vehicle(constructor, seats, model) VALUES('Peugeot', 4, '3008')");
+            stmt.execute("INSERT INTO Vehicle(constructor, seats, model) VALUES('Seat', 4, 'Ibiza')");
+            stmt.execute("INSERT INTO Vehicle(constructor, seats, model) VALUES('Nissan', 4, 'X-Trail')");
 
             stmt.execute("INSERT INTO Reservation(client_id, vehicle_id, debut, fin) VALUES(1, 2, '2023-04-18', '2023-04-30')");
             stmt.execute("INSERT INTO Reservation(client_id, vehicle_id, debut, fin) VALUES(3, 4, '2023-03-26', '2023-05-16')");

@@ -36,7 +36,6 @@ public class ReservationDao {
 	private static final String COUNT_ALL_RESERVATIONS_QUERY = "SELECT COUNT(id) FROM Reservation;";
 	private static final String COUNT_RESERVATION_BY_CLIENT_QUERY = "SELECT COUNT(id) FROM Reservation WHERE client_id=?;";
 	private static final String COUNT_RESERVATION_BY_VEHICLE_QUERY = "SELECT COUNT(id) FROM Reservation WHERE vehicle_id=?;";
-	private static final String COUNT_VEHICLE_BY_DATE_RESERVATION_QUERY = "SELECT COUNT(*) FROM Reservation WHERE vehicle_id = ? AND debut = ?;";
 
 	public void create(Reservation reservation) throws DaoException {
 		try
@@ -364,5 +363,4 @@ public class ReservationDao {
 		}
 		return test;
 	}
-
 }

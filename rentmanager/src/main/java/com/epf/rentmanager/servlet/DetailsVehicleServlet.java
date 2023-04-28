@@ -39,14 +39,14 @@ public class DetailsVehicleServlet extends HttpServlet {
 
         try {
             req.setAttribute("vehicle", vehicleService.findById(id));
-            List<Reservation> reservations = reservationService.findResaByClientId(id);
+            List<Reservation> reservations = reservationService.findResaByVehicleId(id);
             Map<Long, Client> users = new HashMap<Long, Client>();
             for (Reservation res : reservations) {
                 users.put(res.getId(), reservationService.findClientResaById(res.getId()));
             }
             req.setAttribute("reservations", reservations);
             req.setAttribute("users", users);
-            req.setAttribute("countReservation", reservationService.countResaByClient(id));
+            req.setAttribute("countReservation", reservationService.countResaByVehicle(id));
 
         } catch (ServiceException e) {
             throw new RuntimeException(e);

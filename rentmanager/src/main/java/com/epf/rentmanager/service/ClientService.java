@@ -61,7 +61,20 @@ public class ClientService {
 	public void edit(long id, String nom, String prenom, String email, LocalDate date) throws ServiceException {
 		// TODO: modifier un client
 		try {
-			clientDao.edit(id, nom, prenom, email, date);
+			Client client = new Client(id, nom, prenom, date, email);
+			if(clientDao.verifierClientMajeur(client) == false){
+				System.out.println("Erreur : le client n'est pas majeur.");
+			}
+			else if(clientDao.verifierNomClient(client) == false){
+				System.out.println("Erreur : le nom doit faire au moins 3 caractères.");
+			}
+			else if (clientDao.verifierPrenomClient(client) == false){
+				System.out.println("Erreur : le prénom doit faire au moins 3 caractères.");
+			}
+			else{
+				clientDao.edit(id, nom, prenom, email, date);
+			}
+
 		} catch (DaoException e) {
 			throw new ServiceException();
 		}

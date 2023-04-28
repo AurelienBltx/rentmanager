@@ -47,7 +47,13 @@ public class VehicleService {
 	public void edit(long id, String constructor, int seats, String model) throws ServiceException {
 		// TODO: modifier un vehicule
 		try {
-			vehicleDao.edit(id, constructor, seats, model);
+			if(seats>2 && seats<9){
+				vehicleDao.edit(id, constructor, seats, model);
+			}
+			else{
+				System.out.println("Erreur : Le nombre de place d'une voiture doit être compris entre 2 et 9.");
+			}
+
 		} catch (DaoException e) {
 			throw new ServiceException();
 		}

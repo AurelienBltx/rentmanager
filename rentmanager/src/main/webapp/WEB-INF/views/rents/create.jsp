@@ -44,7 +44,7 @@
                                     <div class="col-sm-10">
                                         <select class="form-control"  id="client_id" name="client_id">
                                             <c:forEach items="${clients}" var="client">
-                                                <option value="${client.id}">${client.name} ${client.lastName}</option>
+                                                <option value="${client.id}">${client.prenom} ${client.nom}</option>
                                             </c:forEach>
                                         </select>
                                     </div>

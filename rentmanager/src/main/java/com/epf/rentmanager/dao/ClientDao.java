@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.models.Vehicle;
 import org.springframework.beans.factory.annotation.Autowire;
 
@@ -21,7 +22,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class ClientDao {
-	public ClientDao() {}
+	public ClientDao() {
+	}
+
 	private static final String CREATE_CLIENT_QUERY = "INSERT INTO Client(nom, prenom, email, naissance) VALUES(?, ?, ?, ?);";
 	private static final String DELETE_CLIENT_QUERY = "DELETE FROM Client WHERE id=?;";
 	private static final String EDIT_CLIENT_QUERY = "UPDATE Client SET nom = ?, prenom = ?, email = ?, naissance = ? WHERE id=?;";
@@ -29,10 +32,9 @@ public class ClientDao {
 	private static final String FIND_VEHICLE_CLIENT_QUERY = "SELECT * FROM Client INNER JOIN Vehicle ON Client.vehicle_id = Vehicle.id WHERE Reservation.id=?;";
 	private static final String FIND_CLIENTS_QUERY = "SELECT * FROM Client;";
 	private static final String COUNT_ALL_CLIENTS_QUERY = "SELECT COUNT(id) FROM Client;";
-	
+
 	public void create(Client client) throws DaoException {
-		try
-		{
+		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(CREATE_CLIENT_QUERY);
 
@@ -45,16 +47,13 @@ public class ClientDao {
 
 			connection.close();
 			stmt.close();
-		}
-		catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
 	}
-	
+
 	public void delete(long id) throws DaoException {
-		try
-		{
+		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(DELETE_CLIENT_QUERY);
 			stmt.setLong(1, id);
@@ -62,16 +61,14 @@ public class ClientDao {
 
 			connection.close();
 			stmt.close();
-		}
-		catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
 	}
 
 
 	public void edit(long id, String nom, String prenom, String email, LocalDate date) throws DaoException {
-		try{
+		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(EDIT_CLIENT_QUERY);
 
@@ -84,17 +81,14 @@ public class ClientDao {
 
 			connection.close();
 			stmt.close();
-		}
-		catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
 	}
 
 	public Client findById(long id) throws DaoException {
 
-		try
-		{
+		try {
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement stmt = connection.prepareStatement(FIND_CLIENT_QUERY);
 			stmt.setLong(1, id);
@@ -110,9 +104,7 @@ public class ClientDao {
 			rs.close();
 
 			return new Client(id, prenom, nom, naissance, email);
-		}
-		catch(SQLException e)
-		{
+		} catch (SQLException e) {
 			throw new RuntimeException();
 		}
 	}
@@ -145,14 +137,14 @@ public class ClientDao {
 
 	public List<Client> findAll() throws DaoException {
 		List<Client> clients = new ArrayList<Client>();
-		try{
+		try {
 			Connection connection = ConnectionManager.getConnection();
 
 			Statement statement = connection.createStatement();
 
 			ResultSet rs = statement.executeQuery(FIND_CLIENTS_QUERY);
 
-			while(rs.next()){
+			while (rs.next()) {
 				long id = rs.getLong("id");
 				String nom = rs.getString("nom");
 				String prenom = rs.getString("prenom");
@@ -170,16 +162,16 @@ public class ClientDao {
 	}
 
 
-	public int countAll() throws DaoException{
+	public int countAll() throws DaoException {
 		int nbClients = 0;
-		try{
+		try {
 			Connection connection = ConnectionManager.getConnection();
 
 			Statement statement = connection.createStatement();
 
 			ResultSet rs = statement.executeQuery(COUNT_ALL_CLIENTS_QUERY);
 
-			if(rs.next()){
+			if (rs.next()) {
 				nbClients = rs.getInt(1);
 			}
 		} catch (SQLException e) {
@@ -190,4 +182,37 @@ public class ClientDao {
 		return nbClients;
 	}
 
+
+	//CONTRAINTES
+
+	public boolean verifierClientMajeur(Client client) throws DaoException {
+		boolean test;
+		LocalDate dateMajeur = LocalDate.now().minusYears(18);
+		if (client.getNaissance().isAfter(dateMajeur)) {
+			test = false;
+		} else {
+			test = true;
+		}
+		return test;
+	}
+
+	public boolean verifierNomClient(Client client) throws DaoException {
+		boolean test;
+		if ((client.getNom().length() > 2) && (client.getNom().length() < 9)) {
+			test = true;
+		} else {
+			test = false;
+		}
+		return test;
+	}
+
+	public boolean verifierPrenomClient(Client client) throws DaoException {
+		boolean test;
+		if ((client.getPrenom().length() > 2) && (client.getPrenom().length() < 9)) {
+			test = true;
+		} else {
+			test = false;
+		}
+		return test;
+	}
 }

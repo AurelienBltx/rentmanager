@@ -29,11 +29,11 @@
                             <div class="box-body">
                                 <div class="form-group">
                                     <label for="last_name" class="col-sm-2 control-label">Nom</label>
-
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
                                     </div>
                                 </div>
+                                ${errors.get('LastNameError')}
                                 <div class="form-group">
                                     <label for="first_name" class="col-sm-2 control-label">Prenom</label>
 

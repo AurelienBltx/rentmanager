@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.epf.rentmanager.models.Reservation;
+import com.epf.rentmanager.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowire;
 
 
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class VehicleDao {
 
+	private ReservationDao reservationDao;
 	public VehicleDao() {
 	}
 
@@ -31,7 +34,6 @@ public class VehicleDao {
 	private static final String FIND_VEHICLE_QUERY = "SELECT * FROM Vehicle WHERE id = ?;";
 	private static final String FIND_VEHICLES_QUERY = "SELECT * FROM Vehicle;";
 	private static final String COUNT_ALL_VEHICLES_QUERY = "SELECT COUNT(id) FROM Vehicle;";
-
 
 	public void create(Vehicle vehicle) throws DaoException {
 		try
@@ -165,4 +167,5 @@ public class VehicleDao {
 
 		return nbVehicles;
 	}
+
 }

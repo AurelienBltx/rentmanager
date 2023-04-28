@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Map;
 
 
 @WebServlet("/users/create")
@@ -35,8 +36,8 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        String nom = req.getParameter("first_name");
-        String prenom = req.getParameter("last_name");
+        String nom = req.getParameter("last_name");
+        String prenom = req.getParameter("first_name");
         String email = req.getParameter("email");
         LocalDate naissance = LocalDate.parse(req.getParameter("naissance"));
 

@@ -1,6 +1,9 @@
 package com.epf.rentmanager.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.models.Client;
+import com.epf.rentmanager.models.Reservation;
+import com.epf.rentmanager.models.Vehicle;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @WebServlet("/rents/delete")
@@ -32,7 +38,16 @@ public class DeleteReservationServlet extends HttpServlet {
 
         try {
             reservationService.delete(id);
-            req.setAttribute("reservations", reservationService.findAll());
+            List<Reservation> reservations = this.reservationService.findAll();
+            Map<Long, Client> users = new HashMap<Long, Client>();
+            Map<Long, Vehicle> cars = new HashMap<Long, Vehicle>();
+            for (Reservation res : reservations) {
+                users.put(res.getId(), reservationService.findClientResaById(res.getId()));
+                cars.put(res.getId(), reservationService.findVehicleResaById(res.getId()));
+            }
+            req.setAttribute("reservations", reservations);
+            req.setAttribute("users", users);
+            req.setAttribute("cars", cars);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         }

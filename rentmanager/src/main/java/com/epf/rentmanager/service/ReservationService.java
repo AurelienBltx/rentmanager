@@ -27,7 +27,16 @@ public class ReservationService {
     public void create(Reservation reservation) throws ServiceException {
         // TODO: créer un client
         try {
-            reservationDao.create(reservation);
+            if(reservationDao.verifierDateReservation(reservation) == false){
+                System.out.println("Erreur : ce véhicule est déjà réservé à cette date.");
+            }
+            else if(reservationDao.verifierLongueurReservation(reservation) == false){
+                System.out.println("Erreur : un véhicule ne peux pas être réservé plus de 7 jours de suite par le même utilisateur.");
+            }
+            else{
+                reservationDao.create(reservation);
+            }
+
         } catch (DaoException e) {
             throw new ServiceException();
         }

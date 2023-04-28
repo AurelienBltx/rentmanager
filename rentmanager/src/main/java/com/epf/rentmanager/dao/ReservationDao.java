@@ -1,11 +1,8 @@
 package com.epf.rentmanager.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +36,7 @@ public class ReservationDao {
 	private static final String COUNT_ALL_RESERVATIONS_QUERY = "SELECT COUNT(id) FROM Reservation;";
 	private static final String COUNT_RESERVATION_BY_CLIENT_QUERY = "SELECT COUNT(id) FROM Reservation WHERE client_id=?;";
 	private static final String COUNT_RESERVATION_BY_VEHICLE_QUERY = "SELECT COUNT(id) FROM Reservation WHERE vehicle_id=?;";
-
+	private static final String COUNT_VEHICLE_BY_DATE_RESERVATION_QUERY = "SELECT COUNT(*) FROM Reservation WHERE vehicle_id = ? AND debut = ?;";
 
 	public void create(Reservation reservation) throws DaoException {
 		try
@@ -341,6 +338,31 @@ public class ReservationDao {
 		}
 
 		return nbReservations;
+	}
+
+	//CONTRAINTES\\
+	public boolean verifierDateReservation(Reservation reservation) throws DaoException{
+		boolean test = true;
+		List<Reservation> reservations = findResaByVehicleId(reservation.getVehicle_id());
+		for(Reservation res : reservations){
+			if((reservation.getDebut().isAfter(res.getDebut()) && (reservation.getDebut().isBefore(res.getFin())))
+				||(reservation.getDebut().isBefore(res.getDebut()) && (reservation.getDebut().isBefore(res.getFin())))){
+				test = false;
+			}
+		}
+		return test;
+	}
+
+	public boolean verifierLongueurReservation(Reservation reservation) throws DaoException{
+		boolean test;
+		long longueurReservation = ChronoUnit.DAYS.between(reservation.getDebut(), reservation.getFin());
+		if (longueurReservation > 7) {
+			test = false;
+		}
+		else {
+			test = true;
+		}
+		return test;
 	}
 
 }

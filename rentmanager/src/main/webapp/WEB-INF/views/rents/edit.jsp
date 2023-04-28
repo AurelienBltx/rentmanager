@@ -34,7 +34,7 @@
                                         <select class="form-control"  id="vehicle_id" name="vehicle_id">
                                             <c:forEach items="${vehicles}" var="vehicle">
                                                 <c:choose>
-                                                    <c:when test="${vehicle.constructor == car.constructor}">
+                                                    <c:when test="${vehicle.id == car.id}">
                                                         <option value="${vehicle.id}" selected>${vehicle.constructor}</option>
                                                     </c:when>
                                                     <c:otherwise>
@@ -52,7 +52,7 @@
                                         <select class="form-control"  id="client_id" name="client_id">
                                             <c:forEach items="${clients}" var="client">
                                                 <c:choose>
-                                                    <c:when test="${client.nom == user.nom}">
+                                                    <c:when test="${client.id == user.id}">
                                                         <option value="${client.id}" selected>${client.prenom} ${client.nom}</option>
                                                     </c:when>
                                                     <c:otherwise>

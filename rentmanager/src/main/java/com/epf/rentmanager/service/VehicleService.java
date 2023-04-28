@@ -24,7 +24,12 @@ public class VehicleService {
 	
 	public void create(Vehicle vehicle) throws ServiceException {
 		try {
-			vehicleDao.create(vehicle);
+			if(vehicle.getSeats()>2 && vehicle.getSeats()<9){
+				vehicleDao.create(vehicle);
+			}
+			else{
+				System.out.println("Erreur : Le nombre de place d'une voiture doit être compris entre 2 et 9.");
+			}
 		} catch (DaoException e) {
 			throw new ServiceException();
 		}

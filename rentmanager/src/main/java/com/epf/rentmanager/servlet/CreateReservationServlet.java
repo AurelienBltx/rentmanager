@@ -1,7 +1,9 @@
 package com.epf.rentmanager.servlet;
 
 import com.epf.rentmanager.exception.ServiceException;
+import com.epf.rentmanager.models.Client;
 import com.epf.rentmanager.models.Reservation;
+import com.epf.rentmanager.models.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
@@ -15,6 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @WebServlet("/rents/create")
@@ -56,7 +61,16 @@ public class CreateReservationServlet extends HttpServlet {
 
         try {
             reservationService.create(new Reservation(1, client_id, vehicle_id, debut, fin));
-            req.setAttribute("reservations", this.reservationService.findAll());
+            List<Reservation> reservations = this.reservationService.findAll();
+            Map<Long, Client> users = new HashMap<Long, Client>();
+            Map<Long, Vehicle> cars = new HashMap<Long, Vehicle>();
+            for (Reservation res : reservations) {
+                users.put(res.getId(), reservationService.findClientResaById(res.getId()));
+                cars.put(res.getId(), reservationService.findVehicleResaById(res.getId()));
+            }
+            req.setAttribute("reservations", reservations);
+            req.setAttribute("users", users);
+            req.setAttribute("cars", cars);
 
         } catch (ServiceException e) {
             throw new RuntimeException(e);
